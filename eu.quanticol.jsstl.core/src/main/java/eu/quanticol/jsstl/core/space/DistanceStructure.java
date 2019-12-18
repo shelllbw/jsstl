@@ -93,6 +93,54 @@ public class DistanceStructure {
 			dMatrix[i][i] = 0;
 		return dMatrix;
 	}
+	
+	// // return distance matrix for surface calculation only
+	public double[][] returnSurfaceDistMatrix() {
+		
+		double[][] dMatrix = new double[g.getNumberOfLocations()][g.getNumberOfLocations()];
+
+		for (int i = 0; i < g.getNumberOfLocations(); i++) {
+			for (int j = 0; j < g.getNumberOfLocations(); j++) {
+				dMatrix[i][j] = -1;
+			}
+		}
+		
+		for (WeightEdge edge: g.getEdges()) {
+			int start = edge.lStart.getPosition();
+			int end = edge.lEnd.getPosition();
+			
+			dMatrix[start][end] = 1;
+			dMatrix[end][start] = 1;
+		}
+		
+		return dMatrix;
+	}
+	
+	// // return distance matrix for NUFEB mesh calculation only
+	public double[][] returnNUFEBDistMatrix(int nx, int ny, int nz) {
+		
+		double[][] dMatrix = new double[g.getNumberOfLocations()][g.getNumberOfLocations()];
+
+		for (int i = 0; i < g.getNumberOfLocations(); i++) {
+			for (int j = 0; j < g.getNumberOfLocations(); j++) {
+				int iz = (int)Math.floor(i/(nx * ny));
+				int iy = (int)Math.floor((i-(nx*ny*iz))/nx);
+				int ix = (int)Math.floor(i-(nx*ny*iz) - nx*iy);
+				
+				int jz = (int)Math.floor(j/(nx * ny));
+				int jy = (int)Math.floor((j-(nx*ny*jz))/nx);
+				int jx = (int)Math.floor(j-(nx*ny*jz) - nx*jy);
+				
+				int dx = ix-jx;
+				int dy = iy-jy;
+				int dz = iz-jz;
+				int dis = Math.abs(dx) + Math.abs(dy) + Math.abs(dz);
+						
+				dMatrix[i][j] = dis;
+			}
+		}
+		return dMatrix;
+	}
 
 	// // return distance matrix
 	public double[][] returnDistMatrixOld() {

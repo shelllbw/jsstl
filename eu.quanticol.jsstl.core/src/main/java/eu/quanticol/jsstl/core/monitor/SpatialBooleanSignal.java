@@ -80,6 +80,7 @@ public class SpatialBooleanSignal {
 		int i =0;
 		for (Location l : graph.getLocations()) {
 			double t = spatialBoleanSignal.get(l).getInitialTime();
+			
 			if (spatialBoleanSignal.get(l).getValueAt(t) == true)
 				boolVect[i]=1;
 			else

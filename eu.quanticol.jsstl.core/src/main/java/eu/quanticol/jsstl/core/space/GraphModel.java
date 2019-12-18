@@ -113,6 +113,18 @@ public final class GraphModel implements SpaceModel<Location, WeightEdge> {
 		DistanceStructure infoGraph = new DistanceStructure(this);
 		this.dM = infoGraph.returnDistMatrix();
 	}
+	
+	// distance Matrix for surface calculation only
+	public void dMSurfacecomputation() {
+		DistanceStructure infoGraph = new DistanceStructure(this);
+		this.dM = infoGraph.returnSurfaceDistMatrix();
+	}
+	
+	// distance Matrix for surface calculation only
+	public void dMNUFEBcomputation(int nx, int ny, int nz) {
+		DistanceStructure infoGraph = new DistanceStructure(this);
+		this.dM = infoGraph.returnNUFEBDistMatrix(nx, ny, nz);
+	}
 
 	// distance Matrix
 	public void dMcomputationOld() {
